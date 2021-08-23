@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
   }
   const SaleData = {
     promoName: req.body.promoName,
-    procent: req.body.procent,
+    percent: req.body.percent,
   };
 
   await Product.create(SaleData)

@@ -23,23 +23,18 @@ exports.create = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Не работает мэн",
+        message: err.message || "Error",
       });
     });
 };
 exports.findAll = async (req, res) => {
-  const orders = require("./order");
-
-  const { productName, price, amout } = req.body;
-
   await Product.findAll()
-
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Не работает мэн",
+        message: err.message || "Error",
       });
     });
 };
@@ -50,20 +45,12 @@ exports.update = (req, res) => {
   Product.update(req.body, {
     where: { id: id },
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "User was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`,
-        });
-      }
+    .then((data) => {
+      res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating User with id=" + id,
+        message: err.message || "Error",
       });
     });
 };
@@ -79,7 +66,7 @@ exports.delete = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Не работает мэн",
+        message: err.message || "Error",
       });
     });
 };

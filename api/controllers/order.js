@@ -11,7 +11,7 @@ exports.create = async (req, res) => {
   }
   const array = [];
   const user = req.jwt.id;
-  const promocode = req.body.promocode;
+  const promoCode = req.body.promoCode;
 
   const result = await refOrder.findAll();
   for (orders of result) {
@@ -21,16 +21,16 @@ exports.create = async (req, res) => {
     return +a + +b;
   });
   total = sum;
-  if (req.body.promocode) {
+  if (req.body.promoCode) {
     const Sale = await Promocode.findOne({
       where: {
-        promoName: promocode,
+        promoName: promoCode,
       },
     });
     if (!Sale) {
       return res.status(404).json({ error: "Такого промокода нет!" });
     } else {
-      const count = total * (Sale.procent / 100);
+      const count = total * (Sale.percent / 100);
       total = total - count;
       await Order.create({
         total: total,
@@ -42,10 +42,10 @@ exports.create = async (req, res) => {
         })
         .catch((err) => res.send(err));
     }
-  } else if (!req.body.promocode) {
+  } else if (!req.body.promoCode) {
     await Order.create({
       total: total,
-      promocodeId: nulll,
+      promocodeId: null,
       userId: user,
     })
       .then((data) => {
@@ -68,7 +68,7 @@ exports.findAll = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Не работает мэн",
+        message: err.message || "Error",
       });
     });
 };
@@ -86,7 +86,7 @@ exports.getById = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Не работает мэн",
+        message: err.message || "Error",
       });
     });
 };
@@ -97,20 +97,12 @@ exports.update = (req, res) => {
   Product.update(req.body, {
     where: { id: id },
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "User was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`,
-        });
-      }
+    .then((data) => {
+      res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating User with id=" + id,
+        message: err.message || "Error",
       });
     });
 };
@@ -126,7 +118,7 @@ exports.delete = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Не работает мэн",
+        message: err.message || "Error",
       });
     });
 };

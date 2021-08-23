@@ -12,7 +12,7 @@ const Promocode = sequelize.define("promocode", {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  procent: {
+  percent: {
     type: Sequelize.INTEGER,
     allowNull: true,
   },

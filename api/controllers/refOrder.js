@@ -62,7 +62,7 @@ exports.findAll = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Ohhhhh",
+        message: err.message || "Error",
       });
     });
 };
@@ -102,7 +102,7 @@ exports.delete = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Does not work",
+        message: err.message || "Error",
       });
     });
 };

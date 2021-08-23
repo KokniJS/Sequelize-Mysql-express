@@ -1,4 +1,3 @@
-const isAuth = require("../controllers/auth/isAuth");
 module.exports = (app) => {
   const reforders = require("../controllers/refOrder");
   app.post("/reforder", reforders.create);
