@@ -13,23 +13,23 @@ exports.create = async (req, res) => {
   const array = [];
   for (let product of products) {
     const Goods = await Product.findOne({ where: { id: product.productId } });
-    if (Goods.amout < product.quanitity) {
+    if (Goods.amout < product.quantity) {
       return res
         .status(404)
         .json({ error: `Product ${Goods.productName} wrong!` });
     } else {
-      const qty = Goods.amout - product.quanitity;
+      const qty = Goods.amout - product.quantity;
       const result = await Product.update(
         { amout: qty },
         { where: { id: product.productId } }
       );
-      total = Goods.price * product.quanitity;
+      total = Goods.price * product.quantity;
     }
-    console.log(product.quanitity);
+    console.log(product.quantity);
     const result = await refOrder
       .create({
         productId: product.productId,
-        quanitity: product.quanitity,
+        quantity: product.quantity,
         total: total,
         orderId: orderId,
       })
@@ -73,20 +73,12 @@ exports.update = (req, res) => {
     .update(req.body, {
       where: { id: id },
     })
-    .then((num) => {
-      if (num == id) {
-        res.send({
-          message: "refOrder was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update refOrder!`,
-        });
-      }
+    .then((data) => {
+      res.send(data);
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating refOrder with id=" + id,
+        message: err.message || "Error",
       });
     });
 };

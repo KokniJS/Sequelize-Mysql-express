@@ -42,14 +42,14 @@ exports.update = async (req, res) => {
       id: id,
     },
   })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Promocode with id=" + id,
-      });
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || "Error",
     });
+  });
 };
 
 exports.delete = async (req, res) => {

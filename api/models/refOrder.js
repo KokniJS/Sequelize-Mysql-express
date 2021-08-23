@@ -10,7 +10,7 @@ const refOrder = sequelize.define("refOrder", {
     allowNull: false,
     primaryKey: true,
   },
-  quanitity: {
+  quantity: {
     type: Sequelize.INTEGER,
     allowNull: true,
   },
