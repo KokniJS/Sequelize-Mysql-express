@@ -35,8 +35,6 @@ exports.findAll = async (req, res) => {
       const { page } = req.query;
       let pages = Math.ceil(data.count / limit);
       offset = limit * (page - 1);
-      console.log({ page: page.page });
-      console.log(offset);
       Product.findAll({
         attributes: ["id", "productName", "price", "amout"],
         limit: limit,
