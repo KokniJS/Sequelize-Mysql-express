@@ -28,14 +28,26 @@ exports.create = async (req, res) => {
     });
 };
 exports.findAll = async (req, res) => {
-  await Product.findAll()
+  let limit = 3;
+  let offset = 0;
+  Product.findAndCountAll()
     .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error",
+      const { page } = req.query;
+      let pages = Math.ceil(data.count / limit);
+      offset = limit * (page - 1);
+      Product.findAll({
+        attributes: ["id", "productName", "price", "amout"],
+        limit: limit,
+        offset: offset,
+        $sort: { id: 1 },
+      }).then((users) => {
+        res
+          .status(200)
+          .json({ result: users, count: data.count, pages: pages });
       });
+    })
+    .catch(function (error) {
+      res.status(500).send("Internal Server Error");
     });
 };
 
