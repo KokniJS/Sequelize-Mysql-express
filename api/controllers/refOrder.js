@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
       );
       total = Goods.price * product.quantity;
     }
-    console.log(product.quantity);
+    // console.log(product.quantity);
     const result = await refOrder
       .create({
         productId: product.productId,
@@ -35,11 +35,11 @@ exports.create = async (req, res) => {
       })
 
       .then((data) => {
-        console.log(data);
         array.push(data);
       })
       .catch((err) => {
-        res.status(500);
+        console.log(err);
+        res.status(500, err);
       });
   }
   return res.send(array);
