@@ -59,7 +59,7 @@ exports.findAll = async (req, res) => {
   await Order.findAll({
     include: [
       {
-        model: Product,
+        model: Promocode,
       },
     ],
   })
